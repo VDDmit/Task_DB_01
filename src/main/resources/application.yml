@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: Task_DB_01
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    clean-on-validation-error: true
+    url: jdbc:postgresql://localhost:5432/postgres
+    user: postgres
+    password: 12341234
+    locations: classpath:db/migration
+  jpa:
+    hibernate:
+      ddl-auto: none
+logging:
+  level:
+    org:
+      flywaydb: DEBUG
+  file:
+    name: logs/spring.log
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
