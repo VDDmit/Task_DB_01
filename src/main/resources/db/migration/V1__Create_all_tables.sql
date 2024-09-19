@@ -1,44 +1,44 @@
 CREATE SCHEMA IF NOT EXISTS db_for_shop;
 
 -- Таблица клиентов
-CREATE TABLE db_for_shop.Customers
+CREATE TABLE db_for_shop.customer
 (
-    CustomerID  SERIAL PRIMARY KEY,
-    FirstName   VARCHAR(50)         NOT NULL,
-    LastName    VARCHAR(50)         NOT NULL,
-    Email       VARCHAR(100) UNIQUE NOT NULL,
-    PhoneNumber VARCHAR(20),
-    Address     TEXT
+    customer_id   SERIAL PRIMARY KEY,
+    first_name    VARCHAR(50)         NOT NULL,
+    last_name     VARCHAR(50)         NOT NULL,
+    email         VARCHAR(100) UNIQUE NOT NULL,
+    phone_number  VARCHAR(20),
+    address       TEXT
 );
 
 -- Таблица товаров
-CREATE TABLE db_for_shop.Products
+CREATE TABLE db_for_shop.product
 (
-    ProductID     SERIAL PRIMARY KEY,
-    ProductName   VARCHAR(100)   NOT NULL,
-    Description   TEXT,
-    Price         NUMERIC(10, 2) NOT NULL,
-    StockQuantity INT            NOT NULL
+    product_id     SERIAL PRIMARY KEY,
+    product_name   VARCHAR(100)   NOT NULL,
+    description    TEXT,
+    price          NUMERIC(10, 2) NOT NULL,
+    stock_quantity INT            NOT NULL
 );
 
 -- Таблица заказов
-CREATE TABLE db_for_shop.Orders
+CREATE TABLE db_for_shop.order
 (
-    OrderID     SERIAL PRIMARY KEY,
-    CustomerID  INT            NOT NULL,
-    OrderDate   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    TotalAmount NUMERIC(10, 2) NOT NULL,
-    FOREIGN KEY (CustomerID) REFERENCES db_for_shop.Customers (CustomerID)
+    order_id     SERIAL PRIMARY KEY,
+    customer_id  INT            NOT NULL,
+    order_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_amount NUMERIC(10, 2) NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES db_for_shop.customer (customer_id)
 );
 
 -- Таблица позиций заказа
-CREATE TABLE db_for_shop.OrderItems
+CREATE TABLE db_for_shop.order_item
 (
-    OrderItemID SERIAL PRIMARY KEY,
-    OrderID     INT            NOT NULL,
-    ProductID   INT            NOT NULL,
-    Quantity    INT            NOT NULL,
-    UnitPrice   NUMERIC(10, 2) NOT NULL,
-    FOREIGN KEY (OrderID) REFERENCES db_for_shop.Orders (OrderID) ON DELETE CASCADE,
-    FOREIGN KEY (ProductID) REFERENCES db_for_shop.Products (ProductID) ON DELETE RESTRICT
+    order_item_id  SERIAL PRIMARY KEY,
+    order_id       INT            NOT NULL,
+    product_id     INT            NOT NULL,
+    quantity       INT            NOT NULL,
+    unit_price     NUMERIC(10, 2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES db_for_shop.order (order_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES db_for_shop.product (product_id) ON DELETE RESTRICT
 );
