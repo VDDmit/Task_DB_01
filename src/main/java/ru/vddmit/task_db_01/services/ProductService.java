@@ -12,22 +12,25 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class ProductService {
-
     private final ProductRepository productRepository;
 
     public List<Product> listProducts(String productName) {
-        if(productName != null) productRepository.findByProductName(productName);
+        if (productName != null) {
+            return productRepository.findByProductName(productName);
+        }
         return productRepository.findAll();
-   }
+    }
+
+    public Product getProductById(int productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
+
     public void saveProduct(Product product) {
         log.info("Saving product: {}", product);
         productRepository.save(product);
     }
+
     public void deleteProduct(int id) {
         productRepository.deleteById(id);
-    }
-
-    public Product getProductById(int productId) {
-       return productRepository.findById(productId).orElse(null);
     }
 }
