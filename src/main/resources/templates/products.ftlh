@@ -7,6 +7,10 @@
 <h1>CarFixPro</h1>
 <hr>
 <h4>Список всех товаров</h4>
+<form action="/" method="get">
+    Поиск по названию товара <input type="text" name ="product_name">
+    <input type="submit" value="Поиск"/>
+</form>
 <#list products as product>
     <div>
         <p><b>${product.product_name}</b> ${product.price} | <a href="/product/${product.product_id}">Подробнее...</a>

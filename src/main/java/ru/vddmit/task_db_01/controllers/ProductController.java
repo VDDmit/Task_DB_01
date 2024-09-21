@@ -4,9 +4,7 @@ package ru.vddmit.task_db_01.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.vddmit.task_db_01.models.Product;
 import ru.vddmit.task_db_01.services.ProductService;
 
@@ -18,9 +16,9 @@ public class ProductController {
 
 
     @GetMapping("/")
-    public String products(Model model){
+    public String products(@RequestParam(name = "product_name", required = false ) String productName, Model model){
 
-        model.addAttribute("products", productService.listProducts());
+        model.addAttribute("products", productService.listProducts(productName));
 
         return "products";
     }

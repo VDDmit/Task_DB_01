@@ -1,38 +1,33 @@
 package ru.vddmit.task_db_01.services;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.vddmit.task_db_01.models.Product;
+import ru.vddmit.task_db_01.repositories.ProductRepository;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ProductService {
-    private List<Product> products = new ArrayList<>();
-    private int ID;
-    {
-        products.add(new Product(++ID, "Шестерня", "радиус 20 см", new BigDecimal(121), 3));
-        products.add(new Product(++ID, "Гайка", "радиус 3 см", new BigDecimal(24), 4));
-    }
 
-    public List<Product> listProducts() {
-        return products;
-    }
+    private final ProductRepository productRepository;
+
+    public List<Product> listProducts(String productName) {
+        if(productName != null) productRepository.findByProductName(productName);
+        return productRepository.findAll();
+   }
     public void saveProduct(Product product) {
-        products.add(product);
+        log.info("Saving product: {}", product);
+        productRepository.save(product);
     }
     public void deleteProduct(int id) {
-        products.removeIf(product -> product.getProduct_id()==id);
+        productRepository.deleteById(id);
     }
 
     public Product getProductById(int productId) {
-        for (Product product : products) {
-            if (product.getProduct_id() == productId) {
-                return product;
-            }
-        }
-
-        return null;
+       return productRepository.findById(productId).orElse(null);
     }
 }
