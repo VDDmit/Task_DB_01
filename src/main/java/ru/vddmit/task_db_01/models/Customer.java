@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customer_id;
-    private String first_name;
-    private String last_name;
+    private int id;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String phone_number;
+    private String phoneNumber;
     private String address;
 }

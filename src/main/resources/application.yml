@@ -3,6 +3,9 @@ spring:
     name: Task_DB_01
   datasource:
     driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 12341234
   flyway:
     enabled: true
     clean-on-validation-error: true
@@ -13,6 +16,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftlh
 logging:
   level:
     org:

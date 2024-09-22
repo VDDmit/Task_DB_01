@@ -19,24 +19,25 @@ public class OrderController {
     public String getOrdersByCustomer(@PathVariable int customerId, Model model) {
         Customer customer = customerService.getCustomerById(customerId);
         model.addAttribute("orders", orderService.getOrdersByCustomer(customer));
-        return "orders";
+        return "orders";  // Шаблон для отображения всех заказов клиента
     }
 
     @GetMapping("/order/{id}")
     public String getOrderById(@PathVariable int id, Model model) {
         model.addAttribute("order", orderService.getOrderById(id));
-        return "order_info";
+        return "order_info";  // Шаблон для отображения информации о заказе
     }
 
     @PostMapping("/order/create")
     public String createOrder(Order order) {
         orderService.saveOrder(order);
-        return "redirect:/orders";
+        return "redirect:/orders/" + order.getCustomer().getId();  // Перенаправляем на список заказов клиента
     }
 
-    @PostMapping("/order/delete/{id}")
+    @DeleteMapping("/order/delete/{id}")
     public String deleteOrder(@PathVariable int id) {
+        Order order = orderService.getOrderById(id);
         orderService.deleteOrder(id);
-        return "redirect:/orders";
+        return "redirect:/orders/" + order.getCustomer().getId();  // Перенаправляем на список заказов после удаления
     }
 }

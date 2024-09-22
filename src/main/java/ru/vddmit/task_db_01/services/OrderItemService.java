@@ -2,6 +2,7 @@ package ru.vddmit.task_db_01.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.vddmit.task_db_01.models.Order;
 import ru.vddmit.task_db_01.models.OrderItem;
 import ru.vddmit.task_db_01.repositories.OrderItemRepository;
 
@@ -12,8 +13,8 @@ import java.util.List;
 public class OrderItemService {
     private final OrderItemRepository orderItemRepository;
 
-    public List<OrderItem> getItemsByOrderId(int orderId) {
-        return orderItemRepository.findByOrderId(orderId);
+    public List<OrderItem> getItemsByOrder(Order order) {
+        return orderItemRepository.findByOrder(order);
     }
 
     public void saveOrderItem(OrderItem orderItem) {
@@ -22,5 +23,9 @@ public class OrderItemService {
 
     public void deleteOrderItem(int orderItemId) {
         orderItemRepository.deleteById(orderItemId);
+    }
+
+    public OrderItem getOrderItemById(int orderItemId) {
+        return orderItemRepository.findById(orderItemId).orElse(null);
     }
 }

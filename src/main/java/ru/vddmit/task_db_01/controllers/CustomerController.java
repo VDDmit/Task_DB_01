@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.vddmit.task_db_01.models.Customer;
 import ru.vddmit.task_db_01.services.CustomerService;
 
+
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
@@ -15,24 +16,25 @@ public class CustomerController {
     @GetMapping("/customers")
     public String getAllCustomers(Model model) {
         model.addAttribute("customers", customerService.getAllCustomers());
-        return "customers";
+        return "customers";  // Возвращаем имя шаблона FreeMarker для отображения всех клиентов
     }
 
     @GetMapping("/customer/{id}")
     public String getCustomerById(@PathVariable int id, Model model) {
         model.addAttribute("customer", customerService.getCustomerById(id));
-        return "customer_info";
+        return "customer_info";  // Шаблон для отображения информации о клиенте
     }
 
     @PostMapping("/customer/create")
     public String createCustomer(Customer customer) {
         customerService.saveCustomer(customer);
-        return "redirect:/customers";
+        return "redirect:/customers";  // Перенаправляем на список клиентов
     }
 
-    @PostMapping("/customer/delete/{id}")
+    @DeleteMapping("/customer/delete/{id}")
     public String deleteCustomer(@PathVariable int id) {
         customerService.deleteCustomer(id);
-        return "redirect:/customers";
+        return "redirect:/customers";  // Перенаправляем на список клиентов после удаления
     }
 }
+

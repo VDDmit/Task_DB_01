@@ -15,7 +15,7 @@ public class ProductController {
     @GetMapping("/products")
     public String products(@RequestParam(name = "product_name", required = false) String productName, Model model) {
         model.addAttribute("products", productService.listProducts(productName));
-        return "products";
+        return "products.ftlh";
     }
 
     @GetMapping("/product/{product_id}")
@@ -30,7 +30,7 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @PostMapping("/product/delete/{product_id}")
+    @DeleteMapping("/product/delete/{product_id}")
     public String deleteProduct(@PathVariable int product_id) {
         productService.deleteProduct(product_id);
         return "redirect:/products";
