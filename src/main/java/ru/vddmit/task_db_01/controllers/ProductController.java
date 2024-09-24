@@ -15,11 +15,22 @@ public class ProductController {
     @GetMapping("/products")
     public String products(@RequestParam(name = "product_name", required = false) String productName, Model model) {
         model.addAttribute("products", productService.listProducts(productName));
-        return "products.ftlh";
+        return "/products";
+    }
+    @GetMapping("/product/{product_id}/edit")
+    public String editProductForm(@PathVariable long product_id, Model model) {
+        model.addAttribute("product", productService.getProductById(product_id));
+        return "/edit_product";
+    }
+    @PostMapping("/product/{product_id}/edit")
+    public String editProduct(@PathVariable long product_id, @ModelAttribute Product product, Model model) {
+        product.setProductId(product_id);
+        productService.saveProduct(product);
+        return "redirect:/products";
     }
 
     @GetMapping("/product/{product_id}")
-    public String productInfo(@PathVariable int product_id, Model model) {
+    public String productInfo(@PathVariable long product_id, Model model) {
         model.addAttribute("product", productService.getProductById(product_id));
         return "product_info";
     }
@@ -30,9 +41,12 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @DeleteMapping("/product/delete/{product_id}")
-    public String deleteProduct(@PathVariable int product_id) {
-        productService.deleteProduct(product_id);
+
+    @PostMapping("/product/{product_id}/delete")
+    public String deleteProduct(@PathVariable String product_id) {
+        long id = Long.parseLong(product_id.replace("\u00A0", "").trim());
+        productService.deleteProduct(id);
         return "redirect:/products";
     }
+
 }

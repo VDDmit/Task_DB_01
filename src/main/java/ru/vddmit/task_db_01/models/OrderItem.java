@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_item_id")
     private int orderItemId;
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
@@ -22,8 +23,8 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+    @Column(name = "quantity")
     private int quantity;
+    @Column(name = "unit_price")
     private BigDecimal unitPrice;
-
-
 }

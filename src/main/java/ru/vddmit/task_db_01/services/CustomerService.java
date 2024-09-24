@@ -1,5 +1,6 @@
 package ru.vddmit.task_db_01.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vddmit.task_db_01.models.Customer;
@@ -18,15 +19,21 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(int id) {
-        return customerRepository.findById(id).orElse(null);
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Customer with id " + id + " not found."));
     }
+
 
     public void saveCustomer(Customer customer) {
         customerRepository.save(customer);
     }
 
     public void deleteCustomer(int id) {
-        customerRepository.deleteById(id);
+        if (customerRepository.existsById(id)) {
+            customerRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Customer with id " + id + " not found.");
+        }
     }
 
     public Optional<Customer> findByEmail(String email) {

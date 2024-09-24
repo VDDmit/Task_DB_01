@@ -3,6 +3,7 @@ package ru.vddmit.task_db_01.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.vddmit.task_db_01.models.Product;
 import ru.vddmit.task_db_01.repositories.ProductRepository;
 
@@ -15,13 +16,14 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<Product> listProducts(String productName) {
-        if (productName != null) {
+        if (StringUtils.hasText(productName)) {
             return productRepository.findByProductName(productName);
         }
         return productRepository.findAll();
     }
 
-    public Product getProductById(int productId) {
+
+    public Product getProductById(long productId) {
         return productRepository.findById(productId).orElse(null);
     }
 
@@ -30,7 +32,10 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void deleteProduct(int id) {
+    public void deleteProduct(long id) {
+        log.info("Deleting product with id: {}", id);
+        System.out.println("Attempting to delete product with ID: " + id);
         productRepository.deleteById(id);
+        System.out.println("Deleted product with ID: " + id);
     }
 }

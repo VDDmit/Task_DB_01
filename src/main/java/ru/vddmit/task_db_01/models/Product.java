@@ -15,9 +15,14 @@ import java.math.BigDecimal;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int productId;
+    @Column(name = "product_id")
+    private long productId;
+    @Column(name = "product_name")
     private String productName;
+    @Column(name = "description")
     private String description;
+    @Column(name = "price")
     private BigDecimal price;
+    @Column(name = "stock_quantity")
     private int stockQuantity;
 }

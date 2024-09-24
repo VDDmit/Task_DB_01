@@ -16,25 +16,25 @@ public class CustomerController {
     @GetMapping("/customers")
     public String getAllCustomers(Model model) {
         model.addAttribute("customers", customerService.getAllCustomers());
-        return "customers";  // Возвращаем имя шаблона FreeMarker для отображения всех клиентов
+        return "customers";
     }
 
     @GetMapping("/customer/{id}")
     public String getCustomerById(@PathVariable int id, Model model) {
         model.addAttribute("customer", customerService.getCustomerById(id));
-        return "customer_info";  // Шаблон для отображения информации о клиенте
+        return "customer_info";
     }
 
     @PostMapping("/customer/create")
     public String createCustomer(Customer customer) {
         customerService.saveCustomer(customer);
-        return "redirect:/customers";  // Перенаправляем на список клиентов
+        return "redirect:/customers";
     }
 
     @DeleteMapping("/customer/delete/{id}")
     public String deleteCustomer(@PathVariable int id) {
         customerService.deleteCustomer(id);
-        return "redirect:/customers";  // Перенаправляем на список клиентов после удаления
+        return "redirect:/customers";
     }
 }
 

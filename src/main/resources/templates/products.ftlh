@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Auto Parts Store</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn.delete {
+            background-color: #dc3545;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn.delete:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Our Products</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/customers">Customers</a>
+        <a href="/orders">Orders</a>
+    </nav>
+</header>
+
+<main>
+    <form action="/products" method="get">
+        <label>
+            <input type="text" name="product_name" placeholder="Search by name">
+        </label>
+        <button type="submit" class="btn">Search</button>
+    </form>
+
+    <h2>Create New Product</h2>
+    <form action="/product/create" method="post">
+        <label>Product Name: <input type="text" name="productName" required></label><br>
+        <label>Description: <textarea name="description"></textarea></label><br>
+        <label>Price: <input type="number" step="0.01" name="price" required></label><br>
+        <label>Stock Quantity: <input type="number" name="stockQuantity" required></label><br>
+        <button type="submit" class="btn">Create Product</button>
+    </form>
+
+    <h2>Products List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th class="actions">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list products as product>
+            <tr>
+                <td>${product.productName}</td>
+                <td>${product.description}</td>
+                <td>${product.price}</td>
+                <td>${product.stockQuantity}</td>
+                <td class="actions">
+                    <form action="/product/${product.productId}/delete" method="post" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                        <button type="submit" class="btn delete">Delete</button>
+                    </form>
+                    <a href="/product/${product.productId}/edit" class="btn">Edit</a>
+                </td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    <p>&copy; 2024 Auto Parts Store</p>
+</footer>
+
+</body>
+
+</html>

@@ -16,12 +16,13 @@ import java.time.LocalDateTime;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private int id;
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-
+    @Column(name = "order_date")
     private LocalDateTime orderDate;
+    @Column(name = "total_amount")
     private BigDecimal totalAmount;
-
 }
