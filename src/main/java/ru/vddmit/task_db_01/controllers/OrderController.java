@@ -16,14 +16,15 @@ public class OrderController {
     private final CustomerService customerService;
 
     @GetMapping("/orders/{customerId}")
-    public String getOrdersByCustomer(@PathVariable int customerId, Model model) {
+    public String getOrdersByCustomer(@PathVariable long customerId, Model model) {
         Customer customer = customerService.getCustomerById(customerId);
         model.addAttribute("orders", orderService.getOrdersByCustomer(customer));
         return "orders";
     }
 
+
     @GetMapping("/order/{id}")
-    public String getOrderById(@PathVariable int id, Model model) {
+    public String getOrderById(@PathVariable long id, Model model) {
         model.addAttribute("order", orderService.getOrderById(id));
         return "order_info";
     }
@@ -35,7 +36,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/order/delete/{id}")
-    public String deleteOrder(@PathVariable int id) {
+    public String deleteOrder(@PathVariable long id) {
         Order order = orderService.getOrderById(id);
         orderService.deleteOrder(id);
         return "redirect:/orders/" + order.getCustomer().getId();

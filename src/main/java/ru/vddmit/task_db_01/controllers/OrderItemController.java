@@ -16,7 +16,7 @@ public class OrderItemController {
     private final OrderService orderService;
 
     @GetMapping("/order/{orderId}/items")
-    public String orderItems(@PathVariable int orderId, Model model) {
+    public String orderItems(@PathVariable long orderId, Model model) {
         Order order = orderService.getOrderById(orderId);
         model.addAttribute("orderItems", orderItemService.getItemsByOrder(order));
         return "order_items";
@@ -30,7 +30,7 @@ public class OrderItemController {
     }
 
     @DeleteMapping("/order/item/delete/{orderItemId}")
-    public String deleteOrderItem(@PathVariable int orderItemId) {
+    public String deleteOrderItem(@PathVariable long orderItemId) {
         OrderItem orderItem = orderItemService.getOrderItemById(orderItemId);
         orderItemService.deleteOrderItem(orderItemId);
         return "redirect:/order/" + orderItem.getOrder().getId() + "/items";  // Перенаправляем на список позиций заказа после удаления

@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS db_for_shop;
 
 -- Таблица клиентов
-CREATE TABLE db_for_shop.customer
+CREATE TABLE customer
 (
     customer_id   SERIAL PRIMARY KEY,
     first_name    VARCHAR(50)         NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE db_for_shop.customer
 );
 
 -- Таблица товаров
-CREATE TABLE db_for_shop.product
+CREATE TABLE product
 (
     product_id     SERIAL PRIMARY KEY,
     product_name   VARCHAR(100)   NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE db_for_shop.product
 );
 
 -- Таблица заказов
-CREATE TABLE db_for_shop.order
+CREATE TABLE "order"
 (
     order_id     SERIAL PRIMARY KEY,
     customer_id  INT            NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE db_for_shop.order
 );
 
 -- Таблица позиций заказа
-CREATE TABLE db_for_shop.order_item
+CREATE TABLE order_item
 (
     order_item_id  SERIAL PRIMARY KEY,
     order_id       INT            NOT NULL,

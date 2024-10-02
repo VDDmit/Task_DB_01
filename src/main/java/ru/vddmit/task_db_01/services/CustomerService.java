@@ -18,7 +18,7 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer getCustomerById(int id) {
+    public Customer getCustomerById(long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with id " + id + " not found."));
     }
@@ -28,7 +28,7 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public void deleteCustomer(int id) {
+    public void deleteCustomer(long id) {
         if (customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
         } else {

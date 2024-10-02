@@ -20,7 +20,7 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/{id}")
-    public String getCustomerById(@PathVariable int id, Model model) {
+    public String getCustomerById(@PathVariable long id, Model model) {
         model.addAttribute("customer", customerService.getCustomerById(id));
         return "customer_info";
     }
@@ -32,7 +32,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/customer/delete/{id}")
-    public String deleteCustomer(@PathVariable int id) {
+    public String deleteCustomer(@PathVariable long id) {
         customerService.deleteCustomer(id);
         return "redirect:/customers";
     }

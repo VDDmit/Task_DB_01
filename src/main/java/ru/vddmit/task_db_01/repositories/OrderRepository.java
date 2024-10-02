@@ -6,6 +6,6 @@ import ru.vddmit.task_db_01.models.Order;
 
 import java.util.List;
 
-public interface OrderRepository extends JpaRepository<Order, Integer> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByCustomer(Customer customer);
 }

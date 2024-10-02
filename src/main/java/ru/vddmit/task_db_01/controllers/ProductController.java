@@ -17,14 +17,19 @@ public class ProductController {
         model.addAttribute("products", productService.listProducts(productName));
         return "/products";
     }
+
     @GetMapping("/product/{product_id}/edit")
-    public String editProductForm(@PathVariable long product_id, Model model) {
-        model.addAttribute("product", productService.getProductById(product_id));
+    public String editProductForm(@PathVariable String product_id, Model model) {
+        long id = Long.parseLong(product_id.replace("\u00A0", "").trim());
+        System.out.println("Id of edit product: " + product_id);
+        model.addAttribute("product", productService.getProductById(id));
         return "/edit_product";
     }
+
     @PostMapping("/product/{product_id}/edit")
-    public String editProduct(@PathVariable long product_id, @ModelAttribute Product product, Model model) {
-        product.setProductId(product_id);
+    public String editProduct(@PathVariable String product_id, @ModelAttribute Product product, Model model) {
+        long id = Long.parseLong(product_id.replace("\u00A0", "").trim());
+        product.setProductId(id);
         productService.saveProduct(product);
         return "redirect:/products";
     }
@@ -43,8 +48,14 @@ public class ProductController {
 
 
     @PostMapping("/product/{product_id}/delete")
-    public String deleteProduct(@PathVariable String product_id) {
+    public String deleteProduct(@PathVariable String product_id, Model model) {
+
         long id = Long.parseLong(product_id.replace("\u00A0", "").trim());
+        System.out.println("Id of product for delete: " + id);
+        if (!productService.canDeleteProduct(id)) {
+            model.addAttribute("error", "Cannot delete product. It is linked to one or more orders.");
+            return "redirect:/products";
+        }
         productService.deleteProduct(id);
         return "redirect:/products";
     }

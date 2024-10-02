@@ -21,11 +21,11 @@ public class OrderItemService {
         orderItemRepository.save(orderItem);
     }
 
-    public void deleteOrderItem(int orderItemId) {
+    public void deleteOrderItem(long orderItemId) {
         orderItemRepository.deleteById(orderItemId);
     }
 
-    public OrderItem getOrderItemById(int orderItemId) {
+    public OrderItem getOrderItemById(long orderItemId) {
         return orderItemRepository.findById(orderItemId).orElse(null);
     }
 }
