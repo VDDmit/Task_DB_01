@@ -15,7 +15,7 @@ public class OrderController {
     private final OrderService orderService;
     private final CustomerService customerService;
 
-    @GetMapping("/orders/{customerId}")
+    @GetMapping("/order/{customerId}")
     public String getOrdersByCustomer(@PathVariable long customerId, Model model) {
         Customer customer = customerService.getCustomerById(customerId);
         model.addAttribute("orders", orderService.getOrdersByCustomer(customer));

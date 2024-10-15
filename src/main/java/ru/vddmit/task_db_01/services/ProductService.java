@@ -43,6 +43,5 @@ public class ProductService {
 
     public boolean canDeleteProduct(long id) {
         return orderItemRepository.countByProduct_ProductId(id) == 0;
-
     }
 }

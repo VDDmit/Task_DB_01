@@ -75,7 +75,6 @@
     <nav>
         <a href="/products">Products</a>
         <a href="/customers">Customers</a>
-        <a href="/orders">Orders</a>
     </nav>
 </header>
 

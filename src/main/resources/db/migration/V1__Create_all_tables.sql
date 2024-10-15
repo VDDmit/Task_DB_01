@@ -28,7 +28,7 @@ CREATE TABLE "order"
     customer_id  INT            NOT NULL,
     order_date   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total_amount NUMERIC(10, 2) NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES db_for_shop.customer (customer_id)
+    FOREIGN KEY (customer_id) REFERENCES customer (customer_id)
 );
 
 -- Таблица позиций заказа
@@ -39,6 +39,6 @@ CREATE TABLE order_item
     product_id     INT            NOT NULL,
     quantity       INT            NOT NULL,
     unit_price     NUMERIC(10, 2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES db_for_shop.order (order_id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES db_for_shop.product (product_id) ON DELETE RESTRICT
+    FOREIGN KEY (order_id) REFERENCES "order" (order_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product (product_id) ON DELETE RESTRICT
 );

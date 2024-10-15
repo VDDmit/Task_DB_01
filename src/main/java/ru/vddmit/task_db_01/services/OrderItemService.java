@@ -23,6 +23,7 @@ public class OrderItemService {
 
     public void deleteOrderItem(long orderItemId) {
         orderItemRepository.deleteById(orderItemId);
+
     }
 
     public OrderItem getOrderItemById(long orderItemId) {

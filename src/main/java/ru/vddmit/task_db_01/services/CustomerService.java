@@ -3,18 +3,21 @@ package ru.vddmit.task_db_01.services;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.vddmit.task_db_01.models.Customer;
 import ru.vddmit.task_db_01.repositories.CustomerRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-    public List<Customer> getAllCustomers() {
+    public List<Customer> listCustomers(String email) {
+        if(StringUtils.hasText(email)){
+            return customerRepository.findByEmail(email);
+        }
         return customerRepository.findAll();
     }
 
@@ -36,7 +39,7 @@ public class CustomerService {
         }
     }
 
-    public Optional<Customer> findByEmail(String email) {
+    public List<Customer> findByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
 }

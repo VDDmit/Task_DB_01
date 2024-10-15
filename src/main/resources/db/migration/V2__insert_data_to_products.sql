@@ -999,3 +999,6 @@ INSERT INTO Product (Product_name, Description, Price, Stock_quantity) VALUES ('
 INSERT INTO Product (Product_name, Description, Price, Stock_quantity) VALUES ('Wall Training', 'Bag computer total threat tend against bit sure eight.', 410.36, 68);
 INSERT INTO Product (Product_name, Description, Price, Stock_quantity) VALUES ('Writer Design', 'Mission happen sometimes pretty list small final certain tree would democratic instead.', 322.79, 82);
 INSERT INTO Product (Product_name, Description, Price, Stock_quantity) VALUES ('Citizen Both', 'Memory most southern put reach pick player everyone.', 66.73, 80);
+INSERT INTO Product (Product_name, Description, Price, Stock_quantity) VALUES ('Air filter', ' VAG 1J0129620 Skoda 	Octavia 2001 - 2011 Volkswagen 	Golf 1998 - 2006', 60, 8);
+INSERT INTO Product (Product_name, Description, Price, Stock_quantity) VALUES ('Oil filter Knecht-Mahle', 'OC1053 Volkswagen Transporter 2010-2018', 10.01, 7);
+INSERT INTO Product (Product_name, Description, Price, Stock_quantity) VALUES ('Adapter holder for Skoda headrest', 'Universal plastic smart holder - for the headrest.', 20.2, 1);
