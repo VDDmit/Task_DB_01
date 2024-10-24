@@ -1,0 +1,285 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1b1b1b, #232323);
+    color: #f0f0f0;
+    line-height: 1.6;
+}
+
+/* Header and Navigation */
+header {
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 10px rgba(255, 64, 129, 0.8);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin: 0 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+nav a:hover {
+    background: linear-gradient(135deg, #ff4081, #ff79b0);
+    transform: scale(1.1);
+}
+
+/* Main Section */
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #2c2c2c;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+/* Form Labels */
+form label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    color: #ff4081; /* Неоновый цвет */
+    text-shadow: 0 0 5px rgba(255, 64, 129, 0.8), 0 0 10px rgba(255, 64, 129, 0.8);
+    display: block;
+    margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="number"],
+form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: none;
+    background: #3a3a3a;
+    color: #fff;
+    font-size: 1.1rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="number"]:focus,
+form textarea:focus {
+    border: 2px solid #ff4081;
+    outline: none;
+    background: #4a4a4a;
+    box-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081;
+}
+
+.btn {
+    padding: 15px 25px;
+    background-color: #8e2de2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(142, 45, 226, 0.8);
+}
+
+.btn:hover {
+    background-color: #ff4081;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 64, 129, 0.8);
+}
+
+/* Customer Box Styling */
+.customer-box {
+    background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(142, 45, 226, 0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.customer-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 64, 129, 0.8);
+}
+
+/* Product Box Styling */
+.product-box {
+    background: linear-gradient(135deg, #292929, #4a4a4a);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(45, 226, 155, 0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(45, 226, 155, 1);
+}
+
+.customer-box h3 {
+    font-size: 1.8rem;
+    color: #ff4081;
+    text-shadow: 0 0 5px rgba(255, 64, 129, 0.8), 0 0 15px rgba(255, 64, 129, 0.8);
+}
+
+.customer-box p {
+    font-size: 1.1rem;
+    color: #ddd;
+}
+
+/* Table Styling */
+table {
+    width: 100%; /* Ширина таблицы на 100% */
+    border-collapse: collapse; /* Убираем промежутки между ячейками */
+}
+
+th, td {
+    padding: 15px; /* Добавляем отступы для ячеек */
+    text-align: left; /* Выравниваем текст по левому краю */
+    border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
+}
+
+th {
+    background: #444; /* Фон заголовков */
+    color: #fff; /* Цвет текста заголовков */
+}
+
+th:nth-child(1), td:nth-child(1) {
+    width: 20%; /* Ширина столбца "Order ID" */
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 30%; /* Ширина столбца "Date" */
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 30%; /* Ширина столбца "Total" */
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 20%; /* Ширина столбца "Actions" */
+}
+
+/* Footer */
+footer {
+    background-color: #8e2de2;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 64, 129, 0.8), 0 0 20px rgba(255, 64, 129, 0.8);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-to-top:hover {
+    background-color: #d81b60;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 64, 129, 1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    main {
+        padding: 15px;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav a {
+        margin-bottom: 10px;
+    }
+
+    table,
+    th,
+    td {
+        font-size: 0.9rem;
+    }
+
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    th.header {
+        font-size: 1.5rem;
+        padding: 10px;
+        background-color: #444;
+        color: #fff;
+        text-align: left;
+    }
+    .center {
+        text-align: center;
+    }
+    .sort-arrow {
+        display: inline-block;
+        margin-left: 5px;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    tbody tr {
+        transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    }
+
+    tbody tr.fade-out {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    tbody tr.fade-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

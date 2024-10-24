@@ -23,23 +23,16 @@ public class OrderController {
         return "/customer_orders";
     }
 
-
-    @GetMapping("/customers/{customerId}/order/{id}")
-    public String getOrderById(@PathVariable long id, Model model) {
-        model.addAttribute("order", orderService.getOrderById(id));
-        return "redirect:/customers/{customerId}/orders";
-    }
-
     @PostMapping("/order/create")
     public String createOrder(Order order) {
         orderService.saveOrder(order);
-        return "redirect:/orders/" + order.getCustomer().getId();
+        return "redirect:/customers/" + order.getCustomer().getId() + "/orders";
     }
 
-    @DeleteMapping("/customers/{customerId}/order/{id}/delete}")
-    public String deleteOrder(@PathVariable long id) {
-        Order order = orderService.getOrderById(id);
-        orderService.deleteOrder(id);
-        return "redirect:/orders/" + order.getCustomer().getId();
+    @PostMapping("/customers/{customerId}/orders/{id}/delete")
+    public String deleteOrder(@PathVariable String id, @PathVariable String customerId) {
+        orderService.deleteOrder(Long.parseLong(id.replace("\u00A0", "").trim()));
+        return "redirect:/customers/" + Long.parseLong(customerId.replace("\u00A0", "").trim()) + "/orders";
     }
+
 }
