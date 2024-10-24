@@ -32,9 +32,14 @@ public class CustomerController {
     @GetMapping("/customers/{customer_id}/edit")
     public String editCustomerForm(@PathVariable String customer_id, Model model) {
         long id = Long.parseLong(customer_id.replace("\u00A0", "").trim());
-        logger.info("Id of edit customer {}", customer_id);
-        model.addAttribute("customer", customerService.getCustomerById(id));
-        return "/edit_customer";
+        Customer customer = customerService.getCustomerById(id);
+        if (customer != null) {
+            model.addAttribute("customer", customer);
+            return "/edit_customer";
+        } else {
+            logger.warn("Customer with id {} not found", customer_id);
+            return "redirect:/customers";
+        }
     }
 
     @PostMapping("/customers/{customer_id}/edit")
@@ -42,6 +47,7 @@ public class CustomerController {
         long id = Long.parseLong(customer_id.replace("\u00A0", "").trim());
         customer.setId(id);
         customerService.saveCustomer(customer);
+        logger.info("Id of edited customer {}", customer_id);
         return "redirect:/customers";
     }
 

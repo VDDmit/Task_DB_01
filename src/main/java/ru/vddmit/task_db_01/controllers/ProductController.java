@@ -37,12 +37,6 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    /*@GetMapping("/product/{product_id}")
-    public String productInfo(@PathVariable long product_id, Model model) {
-        model.addAttribute("product", productService.getProductById(product_id));
-        return "product_info";
-    }*/
-
     @PostMapping("/product/create")
     public String createProduct(Product product) {
         productService.saveProduct(product);

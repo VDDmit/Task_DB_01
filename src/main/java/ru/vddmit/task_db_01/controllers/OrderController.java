@@ -15,18 +15,19 @@ public class OrderController {
     private final OrderService orderService;
     private final CustomerService customerService;
 
-    @GetMapping("/order/{customerId}")
+    @GetMapping("/customers/{customerId}/orders")
     public String getOrdersByCustomer(@PathVariable long customerId, Model model) {
         Customer customer = customerService.getCustomerById(customerId);
         model.addAttribute("orders", orderService.getOrdersByCustomer(customer));
-        return "orders";
+        model.addAttribute("customer", customer);
+        return "/customer_orders";
     }
 
 
-    @GetMapping("/order/{id}")
+    @GetMapping("/customers/{customerId}/order/{id}")
     public String getOrderById(@PathVariable long id, Model model) {
         model.addAttribute("order", orderService.getOrderById(id));
-        return "order_info";
+        return "redirect:/customers/{customerId}/orders";
     }
 
     @PostMapping("/order/create")
@@ -35,7 +36,7 @@ public class OrderController {
         return "redirect:/orders/" + order.getCustomer().getId();
     }
 
-    @DeleteMapping("/order/delete/{id}")
+    @DeleteMapping("/customers/{customerId}/order/{id}/delete}")
     public String deleteOrder(@PathVariable long id) {
         Order order = orderService.getOrderById(id);
         orderService.deleteOrder(id);
