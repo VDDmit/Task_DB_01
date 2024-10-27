@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders for ${customer.firstName} ${customer.lastName}</title>
+    <title>Orders for ${customer.firstName} ${customer.lastName} - Auto Parts Store</title>
     <link rel="stylesheet" href="/styles/styles.css">
     <script>
         function formatDate(dateString) {
@@ -56,8 +56,7 @@
                 <td>${order.totalAmount}</td>
                 <div style="display: flex; gap: 10px;">
                     <td>
-                        <#--Тут требуется доделать функциональность view-->
-                        <a href="/order/${order.id}" class="btn">View</a>
+                        <a href="/customers/${customer.id}/order/${order.id}" class="btn">View</a>
                         <form action="/customers/${customer.id}/orders/${order.id}/delete" method="post" style="display:inline;"
                               onsubmit="return confirm('Are you sure you want to delete this order?');">
                             <button type="submit" class="btn delete">Delete</button>

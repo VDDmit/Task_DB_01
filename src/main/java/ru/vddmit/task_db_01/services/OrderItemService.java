@@ -29,4 +29,11 @@ public class OrderItemService {
     public OrderItem getOrderItemById(long orderItemId) {
         return orderItemRepository.findById(orderItemId).orElse(null);
     }
+
+    public OrderItem getOrderItemByOrderIdAndProductId(long orderId, long productId) {
+        return orderItemRepository.findByOrderIdAndProduct_ProductId(orderId, productId);
+    }
+    public void deleteOrderItemByOrderIdAndProductId(long orderId, long productId) {
+        orderItemRepository.deleteByOrderIdAndProduct_ProductId(orderId, productId);
+    }
 }
