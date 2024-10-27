@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products for order with id: ${order.id}</title>
+    <title>Products for order with id: ${order.id} - Auto Parts Store</title>
     <link rel="stylesheet" href="/styles/styles.css">
 </head>
 
@@ -12,9 +12,9 @@
     <h1>Products for order with id: ${order.id}</h1>
     <nav>
         <a href="/">Home</a>
-        <a href="/customers/${customer.id}/orders">Back to customer orders</a>
         <a href="/products">Products</a>
         <a href="/customers">Customers</a>
+        <a href="/customers/${customer.id}/orders">Back to customer orders</a>
     </nav>
 </header>
 
@@ -46,7 +46,7 @@
                 <td>${item.unitPrice * item.quantity}</td>
                 <td>
                     <div style="display: flex; gap: 10px;">
-                        <form action="/orders/${order.id}/products/${item.product.productId}/edit" method="get" style="display:inline;">
+                        <form action="/customers/${customer.id}/order/${order.id}/${item.product.productId}/edit" method="get" style="display:inline;">
                             <button type="submit" class="btn edit">Edit</button>
                         </form>
 

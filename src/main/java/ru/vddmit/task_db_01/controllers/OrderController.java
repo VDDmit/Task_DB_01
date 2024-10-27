@@ -14,6 +14,8 @@ import ru.vddmit.task_db_01.services.OrderService;
 import ru.vddmit.task_db_01.services.CustomerService;
 import ru.vddmit.task_db_01.services.ProductService;
 
+import java.math.BigDecimal;
+
 @Controller
 @RequiredArgsConstructor
 public class OrderController {
@@ -42,7 +44,6 @@ public class OrderController {
         return "/view_order";
     }
 
-
     @PostMapping("/order/create")
     public String createOrder(Order order) {
         orderService.saveOrder(order);
@@ -68,30 +69,31 @@ public class OrderController {
         return "/edit_order";
     }
 
-    @GetMapping("/customers/{customerId}/order/{orderId}/{productId}/edit")
-    private String editOrderPage(@PathVariable long customerId, @PathVariable long orderId, @PathVariable long productId, Model model){
-        model.addAttribute("orderItem", orderItemService.getOrderItemByOrderIdAndProductId(orderId, productId));
-        return "/edit_order";
-    }
-
     @PostMapping("/customers/{customerId}/order/{orderId}/{productId}/edit")
     public String editOrderItem(@PathVariable long customerId,
                                 @PathVariable long orderId,
                                 @PathVariable long productId,
+                                @RequestParam BigDecimal unitPrice,
                                 @RequestParam int quantity) {
 
         OrderItem orderItem = orderItemService.getOrderItemByOrderIdAndProductId(orderId, productId);
         Product product = productService.getProductById(productId);
 
         int previousQuantity = orderItem.getQuantity();
-
         int stockDifference = quantity - previousQuantity;
         int availableStock = product.getStockQuantity();
+
         if (stockDifference > availableStock) {
             return "redirect:/customers/" + customerId + "/order/" + orderId + "?error=not_enough_stock";
         }
+
         orderItem.setQuantity(quantity);
+        orderItem.setUnitPrice(unitPrice);
         product.setStockQuantity(availableStock - stockDifference);
+
+        orderItemService.saveOrderItem(orderItem);
+        productService.saveProduct(product);
+
         return "redirect:/customers/" + customerId + "/order/" + orderId;
     }
 
@@ -105,17 +107,14 @@ public class OrderController {
         product.setStockQuantity(product.getStockQuantity() + quantity);
         productService.saveProduct(product);
 
-
         orderItemService.deleteOrderItemByOrderIdAndProductId(orderId, productId);
 
         return "redirect:/customers/" + customerId + "/order/" + orderId;
     }
-
 
     @PostMapping("/customers/{customerId}/orders/{id}/delete")
     public String deleteOrder(@PathVariable String id, @PathVariable String customerId) {
         orderService.deleteOrder(Long.parseLong(id.replace("\u00A0", "").trim()));
         return "redirect:/customers/" + Long.parseLong(customerId.replace("\u00A0", "").trim()) + "/orders";
     }
-
 }
