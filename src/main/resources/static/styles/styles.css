@@ -59,7 +59,7 @@ main {
 form label {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.1rem;
-    color: #ff4081; /* Неоновый цвет */
+    color: #ff4081;
     text-shadow: 0 0 5px rgba(255, 64, 129, 0.8), 0 0 10px rgba(255, 64, 129, 0.8);
     display: block;
     margin-bottom: 10px;
@@ -152,19 +152,19 @@ form textarea:focus {
 
 /* Table Styling */
 table {
-    width: 100%; /* Ширина таблицы на 100% */
-    border-collapse: collapse; /* Убираем промежутки между ячейками */
+    width: 100%;
+    border-collapse: collapse;
 }
 
 th, td {
-    padding: 15px; /* Добавляем отступы для ячеек */
-    text-align: left; /* Выравниваем текст по левому краю */
-    border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
 }
 
 th {
-    background: #444; /* Фон заголовков */
-    color: #fff; /* Цвет текста заголовков */
+    background: #444;
+    color: #fff;
 }
 
 th:nth-child(1), td:nth-child(1) {
