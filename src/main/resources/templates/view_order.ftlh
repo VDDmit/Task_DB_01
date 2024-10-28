@@ -6,10 +6,9 @@
     <title>Products for order with id: ${order.id} - Auto Parts Store</title>
     <link rel="stylesheet" href="/styles/styles.css">
     <style>
-        /* Минимальные стили для прокручиваемого окна с продуктами */
         .product-scroll-box {
-            max-height: 150px; /* Высота окна для прокрутки */
-            overflow-y: scroll; /* Вертикальная прокрутка */
+            max-height: 150px;
+            overflow-y: scroll;
             border: 1px solid #ddd;
             padding: 10px;
             margin-bottom: 20px;
@@ -30,6 +29,21 @@
         .quantity-inputs input {
             width: 70px;
             padding: 5px;
+        }
+
+        .search-input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+
+        .search-input::placeholder {
+            color: #bbb;
         }
     </style>
 </head>
@@ -92,8 +106,10 @@
         </tbody>
     </table>
 
-    <!-- Прокручиваемый список всех продуктов с доступным количеством -->
-    <div class="product-scroll-box">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search products..."
+           onkeyup="filterProducts()">
+
+    <div class="product-scroll-box" id="productList">
         <#list products as product>
             <label>
                 <input type="radio" name="selectedProduct" value="${product.productId}">
@@ -102,7 +118,6 @@
         </#list>
     </div>
 
-    <!-- Поля для указания количества -->
     <div class="quantity-inputs">
         <label>Quantity:
             <input type="number" name="quantity" id="quantityInput" min="1" required>
@@ -123,21 +138,32 @@
 <script>
     document.getElementById('addProductForm').onsubmit = function (event) {
         const selectedProduct = document.querySelector('input[name="selectedProduct"]:checked');
-        const quantityInput = document.getElementById('quantityInput'); // Исправлено на более точный выбор
+        const quantityInput = document.getElementById('quantityInput');
 
         if (!selectedProduct || !quantityInput.value || quantityInput.value <= 0) {
-            alert("Пожалуйста, выберите продукт и укажите количество.");
+            alert("Please select a product and indicate quantity.");
             event.preventDefault();
             return;
         }
-
-        // Проверка и вывод значений перед отправкой
-        console.log("Выбранный продукт ID:", selectedProduct.value);
-        console.log("Количество:", quantityInput.value);
-
         document.getElementById('productId').value = selectedProduct.value;
         document.getElementById('quantity').value = quantityInput.value;
     };
+
+    function filterProducts() {
+        const searchInput = document.getElementById('searchInput');
+        const filter = searchInput.value.toLowerCase();
+        const productList = document.getElementById('productList');
+        const labels = productList.getElementsByTagName('label');
+
+        for (let i = 0; i < labels.length; i++) {
+            const productName = labels[i].textContent || labels[i].innerText;
+            if (productName.toLowerCase().indexOf(filter) > -1) {
+                labels[i].style.display = "";
+            } else {
+                labels[i].style.display = "none";
+            }
+        }
+    }
 </script>
 
 </body>
