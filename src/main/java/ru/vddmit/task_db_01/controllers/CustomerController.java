@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.vddmit.task_db_01.models.Customer;
 import ru.vddmit.task_db_01.services.CustomerService;
 
-
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
@@ -35,6 +34,7 @@ public class CustomerController {
         Customer customer = customerService.getCustomerById(id);
         if (customer != null) {
             model.addAttribute("customer", customer);
+            logger.info("Loaded customer for editing with id {}", customer_id);
             return "/edit_customer";
         } else {
             logger.warn("Customer with id {} not found", customer_id);
@@ -47,7 +47,7 @@ public class CustomerController {
         long id = Long.parseLong(customer_id.replace("\u00A0", "").trim());
         customer.setId(id);
         customerService.saveCustomer(customer);
-        logger.info("Id of edited customer {}", customer_id);
+        logger.info("Customer with id {} edited", customer_id);
         return "redirect:/customers";
     }
 
@@ -58,4 +58,3 @@ public class CustomerController {
         return "redirect:/customers";
     }
 }
-

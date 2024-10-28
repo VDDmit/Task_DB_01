@@ -24,16 +24,17 @@ public class ProductController {
     @GetMapping("/product/{product_id}/edit")
     public String editProductForm(@PathVariable String product_id, Model model) {
         long id = Long.parseLong(product_id.replace("\u00A0", "").trim());
-        logger.info("Id of edit product: {}", product_id);
+        logger.info("Id of product to edit: {}", id);
         model.addAttribute("product", productService.getProductById(id));
         return "/edit_product";
     }
 
     @PostMapping("/product/{product_id}/edit")
-    public String editProduct(@PathVariable String product_id, @ModelAttribute Product product, Model model) {
+    public String editProduct(@PathVariable String product_id, @ModelAttribute Product product) {
         long id = Long.parseLong(product_id.replace("\u00A0", "").trim());
         product.setProductId(id);
         productService.saveProduct(product);
+        logger.info("Product updated with id: {}", id);
         return "redirect:/products";
     }
 
@@ -44,18 +45,16 @@ public class ProductController {
         return "redirect:/products";
     }
 
-
     @PostMapping("/product/{product_id}/delete")
     public String deleteProduct(@PathVariable String product_id, Model model) {
         long id = Long.parseLong(product_id.replace("\u00A0", "").trim());
         if (!productService.canDeleteProduct(id)) {
             model.addAttribute("error", "Cannot delete product. It is linked to one or more orders.");
-            logger.error("Cannot delete product. It is linked to one or more orders. id ={}, product_id = {}", id, product_id);
+            logger.error("Cannot delete product. It is linked to one or more orders. id = {}, product_id = {}", id, product_id);
             return "redirect:/products";
         }
-        logger.info("Id of deleted product: {}", id);
         productService.deleteProduct(id);
+        logger.info("Product deleted with id: {}", id);
         return "redirect:/products";
     }
-
 }
