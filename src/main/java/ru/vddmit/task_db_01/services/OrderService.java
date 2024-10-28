@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.vddmit.task_db_01.models.Customer;
 import ru.vddmit.task_db_01.models.Order;
-import ru.vddmit.task_db_01.models.OrderItem;
 import ru.vddmit.task_db_01.repositories.OrderRepository;
 
 import java.util.List;

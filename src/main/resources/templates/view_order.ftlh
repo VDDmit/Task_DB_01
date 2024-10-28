@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products for order with id: ${order.id} - Auto Parts Store</title>
     <link rel="stylesheet" href="/styles/styles.css">
+    <style>
+        /* Минимальные стили для прокручиваемого окна с продуктами */
+        .product-scroll-box {
+            max-height: 150px; /* Высота окна для прокрутки */
+            overflow-y: scroll; /* Вертикальная прокрутка */
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .product-scroll-box label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .quantity-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quantity-inputs input {
+            width: 70px;
+            padding: 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,6 +52,7 @@
     <p><strong>Phone:</strong> ${customer.phoneNumber}</p>
 
     <h2>Products List</h2>
+
     <table>
         <thead>
         <tr>
@@ -46,11 +74,14 @@
                 <td>${item.unitPrice * item.quantity}</td>
                 <td>
                     <div style="display: flex; gap: 10px;">
-                        <form action="/customers/${customer.id}/order/${order.id}/${item.product.productId}/edit" method="get" style="display:inline;">
+                        <form action="/customers/${customer.id}/order/${order.id}/${item.product.productId}/edit"
+                              method="get" style="display:inline;">
                             <button type="submit" class="btn edit">Edit</button>
                         </form>
 
-                        <form action="/customers/${customer.id}/order/${order.id}/products/${item.product.productId}/delete" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to remove this product?');">
+                        <form action="/customers/${customer.id}/order/${order.id}/products/${item.product.productId}/delete"
+                              method="post" style="display:inline;"
+                              onsubmit="return confirm('Are you sure you want to remove this product?');">
                             <input type="hidden" name="quantity" value="${item.quantity}">
                             <button type="submit" class="btn delete">Delete</button>
                         </form>
@@ -61,11 +92,53 @@
         </tbody>
     </table>
 
+    <!-- Прокручиваемый список всех продуктов с доступным количеством -->
+    <div class="product-scroll-box">
+        <#list products as product>
+            <label>
+                <input type="radio" name="selectedProduct" value="${product.productId}">
+                ${product.productName} - $${product.price} (In stock: ${product.stockQuantity})
+            </label>
+        </#list>
+    </div>
+
+    <!-- Поля для указания количества -->
+    <div class="quantity-inputs">
+        <label>Quantity:
+            <input type="number" name="quantity" id="quantityInput" min="1" required>
+        </label>
+    </div>
+
+    <form id="addProductForm" action="/customers/${customer.id}/order/${order.id}/add_product_for_order" method="post">
+        <input type="hidden" name="productId" id="productId">
+        <input type="hidden" name="quantity" id="quantity">
+        <button type="submit" class="btn add">Add product</button>
+    </form>
 </main>
 
 <footer>
     <p>&copy; 2024 Auto Parts Store</p>
 </footer>
+
+<script>
+    document.getElementById('addProductForm').onsubmit = function (event) {
+        const selectedProduct = document.querySelector('input[name="selectedProduct"]:checked');
+        const quantityInput = document.getElementById('quantityInput'); // Исправлено на более точный выбор
+
+        if (!selectedProduct || !quantityInput.value || quantityInput.value <= 0) {
+            alert("Пожалуйста, выберите продукт и укажите количество.");
+            event.preventDefault();
+            return;
+        }
+
+        // Проверка и вывод значений перед отправкой
+        console.log("Выбранный продукт ID:", selectedProduct.value);
+        console.log("Количество:", quantityInput.value);
+
+        document.getElementById('productId').value = selectedProduct.value;
+        document.getElementById('quantity').value = quantityInput.value;
+    };
+</script>
 
 </body>
 </html>
