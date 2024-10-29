@@ -69,7 +69,7 @@
     </table>
 
     <h3>Add New Order</h3>
-    <form action="/order/create" method="post">
+    <form action="/customer/${customer.id}/order_create" method="post">
         <button type="submit" class="btn">Create Order</button>
     </form>
 

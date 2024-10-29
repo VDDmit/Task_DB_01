@@ -51,7 +51,7 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
-    @PostMapping("/customers/delete/{id}")
+    @PostMapping("/customers/{id}/delete")
     public String deleteCustomer(@PathVariable String id) {
         customerService.deleteCustomer(Long.parseLong(id.replace("\u00A0", "").trim()));
         logger.info("Customer with id {} deleted", id);

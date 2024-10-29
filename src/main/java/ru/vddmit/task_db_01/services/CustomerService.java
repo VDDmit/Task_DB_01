@@ -54,7 +54,6 @@ public class CustomerService {
                     .map(Order::getId)
                     .toList();
             orderRepository.deleteByCustomer(customer);
-            orderRepository.deleteByCustomer(customer);
             customerRepository.deleteById(id);
 
             logger.info("Customer with id {} deleted with his orders their ids: {}", id, orderIds);

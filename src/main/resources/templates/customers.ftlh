@@ -46,7 +46,7 @@
                 <p>Phone: ${customer.phoneNumber}</p>
                 <p>Address: ${customer.address}</p>
                 <div class="actions">
-                    <form action="/customers/delete/${customer.id}" method="post" style="display: inline-block;"
+                    <form action="/customers/${customer.id}/delete" method="post" style="display: inline-block;"
                           onsubmit="return confirm('Are you sure you want to delete this customer with their orders?');">
                         <button type="submit" class="btn delete">Delete</button>
                     </form>

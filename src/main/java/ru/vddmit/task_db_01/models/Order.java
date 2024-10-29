@@ -27,4 +27,5 @@ public class Order {
     @Min(value = 0, message = "Total amount cannot be negative")
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
+
 }
