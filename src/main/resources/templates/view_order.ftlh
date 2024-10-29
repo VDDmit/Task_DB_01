@@ -136,18 +136,27 @@
 </footer>
 
 <script>
-    document.getElementById('addProductForm').onsubmit = function (event) {
+    function updateQuantityMax() {
         const selectedProduct = document.querySelector('input[name="selectedProduct"]:checked');
         const quantityInput = document.getElementById('quantityInput');
 
-        if (!selectedProduct || !quantityInput.value || quantityInput.value <= 0) {
-            alert("Please select a product and indicate quantity.");
-            event.preventDefault();
-            return;
+        if (selectedProduct) {
+            const stockQuantity = parseInt(selectedProduct.closest('label').textContent.match(/\(In stock: (\d+)\)/)[1], 10);
+            quantityInput.max = stockQuantity;
+            quantityInput.value = Math.min(quantityInput.value || 1, stockQuantity);
         }
-        document.getElementById('productId').value = selectedProduct.value;
-        document.getElementById('quantity').value = quantityInput.value;
-    };
+    }
+
+    document.querySelectorAll('input[name="selectedProduct"]').forEach((productRadio) => {
+        productRadio.addEventListener('change', updateQuantityMax);
+    });
+
+    document.getElementById('quantityInput').addEventListener('input', function () {
+        const maxQuantity = parseInt(this.max, 10);
+        if (parseInt(this.value, 10) > maxQuantity) {
+            this.value = maxQuantity;
+        }
+    });
 
     function filterProducts() {
         const searchInput = document.getElementById('searchInput');
@@ -164,7 +173,21 @@
             }
         }
     }
+
+    document.getElementById('addProductForm').onsubmit = function (event) {
+        const selectedProduct = document.querySelector('input[name="selectedProduct"]:checked');
+        const quantityInput = document.getElementById('quantityInput');
+
+        if (!selectedProduct || !quantityInput.value || quantityInput.value <= 0) {
+            alert("Please select a product and indicate quantity.");
+            event.preventDefault();
+            return;
+        }
+        document.getElementById('productId').value = selectedProduct.value;
+        document.getElementById('quantity').value = quantityInput.value;
+    };
 </script>
+
 
 </body>
 </html>

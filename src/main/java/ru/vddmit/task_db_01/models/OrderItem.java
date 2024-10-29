@@ -1,6 +1,7 @@
 package ru.vddmit.task_db_01.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class OrderItem {
     private Product product;
     @Column(name = "quantity")
     private int quantity;
+    @Min(value = 0, message = "unitPrice cannot be negative")
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 }
