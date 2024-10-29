@@ -19,10 +19,11 @@ public class OrderItemController {
     private static final Logger logger = LoggerFactory.getLogger(OrderItemController.class);
 
     @GetMapping("/order/{orderId}/items")
-    public String orderItems(@PathVariable long orderId, Model model) {
-        Order order = orderService.getOrderById(orderId);
+    public String orderItems(@PathVariable String orderId, Model model) {
+        long parsedOrderId = Long.parseLong(orderId.replace("\u00A0", "").trim());
+        Order order = orderService.getOrderById(parsedOrderId);
         model.addAttribute("orderItems", orderItemService.getItemsByOrder(order));
-        logger.info("Loaded items for order id {}", orderId);
+        logger.info("Loaded items for order id {}", parsedOrderId);
         return "order_items";
     }
 
@@ -34,10 +35,11 @@ public class OrderItemController {
     }
 
     @DeleteMapping("/order/item/delete/{orderItemId}")
-    public String deleteOrderItem(@PathVariable long orderItemId) {
-        OrderItem orderItem = orderItemService.getOrderItemById(orderItemId);
-        orderItemService.deleteOrderItem(orderItemId);
-        logger.info("Deleted order item with id {} from order id {}", orderItemId, orderItem.getOrder().getId());
+    public String deleteOrderItem(@PathVariable String orderItemId) {
+        long parsedOrderItemId = Long.parseLong(orderItemId.replace("\u00A0", "").trim());
+        OrderItem orderItem = orderItemService.getOrderItemById(parsedOrderItemId);
+        orderItemService.deleteOrderItem(parsedOrderItemId);
+        logger.info("Deleted order item with id {} from order id {}", parsedOrderItemId, orderItem.getOrder().getId());
         return "redirect:/order/" + orderItem.getOrder().getId() + "/items";
     }
 }

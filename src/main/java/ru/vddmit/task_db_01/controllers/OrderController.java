@@ -29,19 +29,22 @@ public class OrderController {
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 
     @GetMapping("/customers/{customerId}/orders")
-    public String getOrdersByCustomer(@PathVariable long customerId, Model model) {
-        log.info("Fetching orders for customerId={}", customerId);
-        Customer customer = customerService.getCustomerById(customerId);
+    public String getOrdersByCustomer(@PathVariable String customerId, Model model) {
+        long parsedCustomerId = Long.parseLong(customerId.replace("\u00A0", "").trim());
+        log.info("Fetching orders for customerId={}", parsedCustomerId);
+        Customer customer = customerService.getCustomerById(parsedCustomerId);
         model.addAttribute("orders", orderService.getOrdersByCustomer(customer));
         model.addAttribute("customer", customer);
         return "/customer_orders";
     }
 
     @GetMapping("/customers/{customerId}/order/{orderId}")
-    public String getOrderById(@PathVariable long customerId, @PathVariable long orderId, Model model) {
-        log.info("Fetching orderId={} for customerId={}", orderId, customerId);
-        Order order = orderService.getOrderById(orderId);
-        Customer customer = customerService.getCustomerById(customerId);
+    public String getOrderById(@PathVariable String customerId, @PathVariable String orderId, Model model) {
+        long parsedCustomerId = Long.parseLong(customerId.replace("\u00A0", "").trim());
+        long parsedOrderId = Long.parseLong(orderId.replace("\u00A0", "").trim());
+        log.info("Fetching orderId={} for customerId={}", parsedOrderId, parsedCustomerId);
+        Order order = orderService.getOrderById(parsedOrderId);
+        Customer customer = customerService.getCustomerById(parsedCustomerId);
 
         model.addAttribute("customer", customer);
         model.addAttribute("products", productService.listProducts(null));
@@ -59,15 +62,19 @@ public class OrderController {
     }
 
     @GetMapping("/customers/{customerId}/order/{orderId}/{productId}/edit")
-    public String showEditOrderItemPage(@PathVariable long customerId,
-                                        @PathVariable long orderId,
-                                        @PathVariable long productId,
+    public String showEditOrderItemPage(@PathVariable String customerId,
+                                        @PathVariable String orderId,
+                                        @PathVariable String productId,
                                         Model model) {
-        log.info("Showing edit page for orderId={}, productId={} and customerId={}", orderId, productId, customerId);
-        Order order = orderService.getOrderById(orderId);
-        OrderItem orderItem = orderItemService.getOrderItemByOrderIdAndProductId(orderId, productId);
-        Product product = productService.getProductById(productId);
-        Customer customer = customerService.getCustomerById(customerId);
+        long parsedCustomerId = Long.parseLong(customerId.replace("\u00A0", "").trim());
+        long parsedOrderId = Long.parseLong(orderId.replace("\u00A0", "").trim());
+        long parsedProductId = Long.parseLong(productId.replace("\u00A0", "").trim());
+
+        log.info("Showing edit page for orderId={}, productId={} and customerId={}", parsedOrderId, parsedProductId, parsedCustomerId);
+        Order order = orderService.getOrderById(parsedOrderId);
+        OrderItem orderItem = orderItemService.getOrderItemByOrderIdAndProductId(parsedOrderId, parsedProductId);
+        Product product = productService.getProductById(parsedProductId);
+        Customer customer = customerService.getCustomerById(parsedCustomerId);
 
         model.addAttribute("customer", customer);
         model.addAttribute("order", order);
@@ -78,16 +85,20 @@ public class OrderController {
     }
 
     @PostMapping("/customers/{customerId}/order/{orderId}/{productId}/edit")
-    public String editOrderItem(@PathVariable long customerId,
-                                @PathVariable long orderId,
-                                @PathVariable long productId,
+    public String editOrderItem(@PathVariable String customerId,
+                                @PathVariable String orderId,
+                                @PathVariable String productId,
                                 @RequestParam BigDecimal unitPrice,
                                 @RequestParam int quantity) {
-        log.info("Editing order item for orderId={}, productId={}, newQuantity={}, unitPrice={}",
-                orderId, productId, quantity, unitPrice);
+        long parsedCustomerId = Long.parseLong(customerId.replace("\u00A0", "").trim());
+        long parsedOrderId = Long.parseLong(orderId.replace("\u00A0", "").trim());
+        long parsedProductId = Long.parseLong(productId.replace("\u00A0", "").trim());
 
-        OrderItem orderItem = orderItemService.getOrderItemByOrderIdAndProductId(orderId, productId);
-        Product product = productService.getProductById(productId);
+        log.info("Editing order item for orderId={}, productId={}, newQuantity={}, unitPrice={}",
+                parsedOrderId, parsedProductId, quantity, unitPrice);
+
+        OrderItem orderItem = orderItemService.getOrderItemByOrderIdAndProductId(parsedOrderId, parsedProductId);
+        Product product = productService.getProductById(parsedProductId);
 
         int previousQuantity = orderItem.getQuantity();
         int stockDifference = quantity - previousQuantity;
@@ -95,8 +106,8 @@ public class OrderController {
 
         if (stockDifference > availableStock) {
             log.warn("Not enough stock available for productId={} requestedQuantity={}, availableStock={}",
-                    productId, quantity, availableStock);
-            return "redirect:/customers/" + customerId + "/order/" + orderId + "?error=not_enough_stock";
+                    parsedProductId, quantity, availableStock);
+            return "redirect:/customers/" + parsedCustomerId + "/order/" + parsedOrderId + "?error=not_enough_stock";
         }
 
         orderItem.setQuantity(quantity);
@@ -107,35 +118,39 @@ public class OrderController {
         productService.saveProduct(product);
 
         log.info("Order item updated successfully: {}", orderItem);
-        return "redirect:/customers/" + customerId + "/order/" + orderId;
+        return "redirect:/customers/" + parsedCustomerId + "/order/" + parsedOrderId;
     }
 
     @Transactional
     @PostMapping("/customers/{customerId}/order/{orderId}/add_product_for_order")
-    public String addProductForOrder(@PathVariable Long customerId,
-                                     @PathVariable Long orderId,
-                                     @RequestParam Long productId,
+    public String addProductForOrder(@PathVariable String customerId,
+                                     @PathVariable String orderId,
+                                     @RequestParam String productId,
                                      @RequestParam Integer quantity) {
-        log.info("Adding product to order: customerId={}, orderId={}, productId={}, quantity={}",
-                customerId, orderId, productId, quantity);
+        long parsedCustomerId = Long.parseLong(customerId.replace("\u00A0", "").trim());
+        long parsedOrderId = Long.parseLong(orderId.replace("\u00A0", "").trim());
+        long parsedProductId = Long.parseLong(productId.replace("\u00A0", "").trim());
 
-        if (customerId == null || orderId == null || productId == null || quantity == null || quantity <= 0) {
+        log.info("Adding product to order: customerId={}, orderId={}, productId={}, quantity={}",
+                parsedCustomerId, parsedOrderId, parsedProductId, quantity);
+
+        if (parsedCustomerId == 0 || parsedOrderId == 0 || parsedProductId == 0 || quantity == null || quantity <= 0) {
             log.error("Invalid input: customerId={}, orderId={}, productId={}, quantity={}",
-                    customerId, orderId, productId, quantity);
-            return "redirect:/customers/" + customerId + "/order/" + orderId + "?error=invalid_input";
+                    parsedCustomerId, parsedOrderId, parsedProductId, quantity);
+            return "redirect:/customers/" + parsedCustomerId + "/order/" + parsedOrderId + "?error=invalid_input";
         }
 
-        Product product = productService.getProductById(productId);
+        Product product = productService.getProductById(parsedProductId);
         log.info("Loaded product: {}", product);
 
-        Order order = orderService.getOrderById(orderId);
+        Order order = orderService.getOrderById(parsedOrderId);
         log.info("Loaded order: {}", order);
 
         product.setStockQuantity(product.getStockQuantity() - quantity);
         productService.saveProduct(product);
-        log.info("Updated product stock: productId={}, newStock={}", productId, product.getStockQuantity());
+        log.info("Updated product stock: productId={}, newStock={}", parsedProductId, product.getStockQuantity());
 
-        OrderItem existingOrderItem = orderItemService.getOrderItemByOrderIdAndProductId(orderId, productId);
+        OrderItem existingOrderItem = orderItemService.getOrderItemByOrderIdAndProductId(parsedOrderId, parsedProductId);
         if (existingOrderItem != null) {
             existingOrderItem.setQuantity(existingOrderItem.getQuantity() + quantity);
             existingOrderItem.setUnitPrice(product.getPrice());
@@ -151,26 +166,30 @@ public class OrderController {
             log.info("Created new order item: {}", newOrderItem);
         }
 
-        return "redirect:/customers/" + customerId + "/order/" + orderId;
+        return "redirect:/customers/" + parsedCustomerId + "/order/" + parsedOrderId;
     }
 
     @Transactional
     @PostMapping("/customers/{customerId}/order/{orderId}/products/{productId}/delete")
-    public String deleteOrderItem(@PathVariable long orderId,
-                                  @PathVariable long productId,
+    public String deleteOrderItem(@PathVariable String orderId,
+                                  @PathVariable String productId,
                                   @RequestParam int quantity,
                                   @PathVariable String customerId) {
-        log.info("Deleting order item for orderId={}, productId={}, quantity={}, customerId={}",
-                orderId, productId, quantity, customerId);
+        long longOrderId = Long.parseLong(orderId.replace("\u00A0", "").trim());
+        long parsedProductId = Long.parseLong(productId.replace("\u00A0", "").trim());
+        long parsedCustomerId = Long.parseLong(customerId.replace("\u00A0", "").trim());
 
-        Product product = productService.getProductById(productId);
+        log.info("Deleting order item for orderId={}, productId={}, quantity={}, customerId={}",
+                longOrderId, parsedProductId, quantity, parsedCustomerId);
+
+        Product product = productService.getProductById(parsedProductId);
         product.setStockQuantity(product.getStockQuantity() + quantity);
         productService.saveProduct(product);
 
-        orderItemService.deleteOrderItemByOrderIdAndProductId(orderId, productId);
-        log.info("Order item deleted successfully: orderId={}, productId={}", orderId, productId);
+        orderItemService.deleteOrderItemByOrderIdAndProductId(longOrderId, parsedProductId);
+        log.info("Order item deleted successfully: orderId={}, productId={}", longOrderId, parsedProductId);
 
-        return "redirect:/customers/" + customerId + "/order/" + orderId;
+        return "redirect:/customers/" + parsedCustomerId + "/order/" + longOrderId;
     }
 
     @PostMapping("/customers/{customerId}/orders/{id}/delete")
