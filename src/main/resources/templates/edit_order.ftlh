@@ -15,7 +15,6 @@
         <a href="/">Home</a>
         <a href="/products">Products</a>
         <a href="/customers">Customers</a>
-        <a href="/customers/${customer.id}/order/${order.id}">Back to products for order</a>
     </nav>
 </header>
 
@@ -27,7 +26,10 @@
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" value="${orderItem.quantity}" required>
 
-        <button type="submit" class="btn edit">Save</button>
+        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <button type="submit" class="btn edit">Save</button>
+            <a href="/customers/${customer.id}/order/${order.id}" class="btn">Back to products for order</a>
+        </div>
     </form>
 </main>
 </body>

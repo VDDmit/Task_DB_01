@@ -15,6 +15,7 @@
     <nav>
         <a href="/">Home</a>
         <a href="/customers">Customers</a>
+        <a href="/statistics_of_orders">Statistics of orders</a>
     </nav>
 </header>
 
@@ -70,6 +71,46 @@
             </#list>
             </tbody>
         </table>
+
+        <!-- Пагинация -->
+        <nav aria-label="Page navigation" style="display: flex; justify-content: center; margin-top: 20px;">
+            <ul class="pagination" style="display: flex; list-style: none; padding: 0;">
+                <li class="page-item" style="margin-right: 8px;">
+                    <a class="page-link" href="?page=0&product_name=${product_name!""}">First</a>
+                </li>
+
+                <#if currentPage == 0>
+                    <li class="page-item disabled" style="margin-right: 8px;">
+                        <span class="page-link">Previous</span>
+                    </li>
+                <#else>
+                    <li class="page-item" style="margin-right: 8px;">
+                        <a class="page-link" href="?page=${currentPage - 1}&product_name=${product_name!""}">Previous</a>
+                    </li>
+                </#if>
+
+                <li class="page-item disabled" style="margin-right: 8px;">
+                    <span class="page-link">Page ${currentPage + 1} of ${totalPages}</span>
+                </li>
+
+                <#if currentPage == (totalPages - 1)>
+                    <li class="page-item disabled" style="margin-right: 8px;">
+                        <span class="page-link">Next</span>
+                    </li>
+                <#else>
+                    <li class="page-item" style="margin-right: 8px;">
+                        <a class="page-link" href="?page=${currentPage + 1}&product_name=${product_name!""}">Next</a>
+                    </li>
+                </#if>
+
+                <li class="page-item">
+                    <a class="page-link" href="?page=${totalPages - 1}&product_name=${product_name!""}">Last</a>
+                </li>
+            </ul>
+        </nav>
+
+
+
     </div>
 </main>
 

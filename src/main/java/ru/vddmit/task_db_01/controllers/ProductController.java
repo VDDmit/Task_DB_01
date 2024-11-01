@@ -3,6 +3,9 @@ package ru.vddmit.task_db_01.controllers;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +18,18 @@ public class ProductController {
     private final ProductService productService;
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
+
     @GetMapping("/products")
-    public String products(@RequestParam(name = "product_name", required = false) String productName, Model model) {
-        model.addAttribute("products", productService.listProducts(productName));
+    public String products(@RequestParam(name = "product_name", required = false) String productName,
+                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "size", defaultValue = "10") int size,
+                           Model model) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productService.listProducts(productName, pageable);
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("product_name", productName);
         return "/products";
     }
 

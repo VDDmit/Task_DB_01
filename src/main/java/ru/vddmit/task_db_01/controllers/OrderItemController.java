@@ -30,4 +30,5 @@ public class OrderItemController {
         logger.info("Deleted order item with id {} from order id {}", parsedOrderItemId, orderItem.getOrder().getId());
         return "redirect:/order/" + orderItem.getOrder().getId() + "/items";
     }
+
 }

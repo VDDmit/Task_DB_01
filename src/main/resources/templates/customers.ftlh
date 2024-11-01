@@ -15,6 +15,7 @@
     <nav>
         <a href="/">Home</a>
         <a href="/products">Products</a>
+        <a href="/statistics_of_orders">Statistics of orders</a>
     </nav>
 </header>
 

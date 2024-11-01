@@ -2,6 +2,8 @@ package ru.vddmit.task_db_01.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import ru.vddmit.task_db_01.models.Product;
@@ -22,6 +24,13 @@ public class ProductService {
             return productRepository.findByProductName(productName);
         }
         return productRepository.findAll();
+    }
+
+    public Page<Product> listProducts(String productName, Pageable pageable) {
+        if (StringUtils.hasText(productName)) {
+            return productRepository.findByProductNameContainingIgnoreCase(productName, pageable);
+        }
+        return productRepository.findAll(pageable);
     }
 
     public Product getProductById(long productId) {

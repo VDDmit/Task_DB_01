@@ -17,6 +17,7 @@ import ru.vddmit.task_db_01.services.CustomerService;
 import ru.vddmit.task_db_01.services.ProductService;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 @Controller
@@ -199,4 +200,29 @@ public class OrderController {
         orderService.deleteOrder(Long.parseLong(id.replace("\u00A0", "").trim()));
         return "redirect:/customers/" + Long.parseLong(customerId.replace("\u00A0", "").trim()) + "/orders";
     }
+
+    @GetMapping("/statistics_of_orders")
+    public String getStatisticsOfOrders(Model model) {
+        log.info("Get statistics of orders");
+        BigDecimal averageOrderPrice = orderService.getAverageOrderPrice();
+        BigDecimal maxOrderPrice = orderService.getMaxOrderPrice();
+        Double averageOrdersPerCustomer = orderService.getAverageOrdersPerCustomer();
+
+        int percentage = 0;
+        if (maxOrderPrice.compareTo(BigDecimal.ZERO) > 0) {
+            percentage = averageOrderPrice.multiply(BigDecimal.valueOf(100))
+                    .divide(maxOrderPrice, RoundingMode.HALF_UP)
+                    .intValue();
+        }
+
+        model.addAttribute("averageOrderPrice", averageOrderPrice);
+        model.addAttribute("maxOrderPrice", maxOrderPrice);
+        model.addAttribute("percentage", percentage);
+        model.addAttribute("averageOrdersPerCustomer", averageOrdersPerCustomer);
+
+        return "/statistics_of_orders";
+    }
+
+
+
 }
