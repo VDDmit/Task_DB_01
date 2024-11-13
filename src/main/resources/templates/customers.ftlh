@@ -51,8 +51,8 @@
                           onsubmit="return confirm('Are you sure you want to delete this customer with their orders?');">
                         <button type="submit" class="btn delete">Delete</button>
                     </form>
-                    <a href="/customers/${customer.id}/edit" class="btn">Edit</a>
-                    <a href="/customers/${customer.id}/orders" class="btn">Orders</a>
+                    <a href="/customers/${customer.id}/edit" class="btn" style="text-decoration: none;">Edit</a>
+                    <a href="/customers/${customer.id}/orders" class="btn" style="text-decoration: none;">Orders</a>
                 </div>
             </div>
         </#list>

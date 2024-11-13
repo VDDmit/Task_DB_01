@@ -21,8 +21,8 @@
     <form action="/product/${product.productId}/edit" method="post">
         <label><h3>Product Name:</h3> <input type="text" name="productName" value="${product.productName}" required></label><br>
         <label><h3>Description:</h3> <textarea name="description">${product.description}</textarea></label><br>
-        <label><h3>Price:</h3> <input type="number" step="0.01" name="price" value="${product.price}" required></label><br>
-        <label><h3>Stock Quantity:</h3> <input type="number" name="stockQuantity" value="${product.stockQuantity}" required></label><br>
+        <label><h3>Price:</h3> <input type="number" step="0.01" name="price" min="0" value="${product.price}" required></label><br>
+        <label><h3>Stock Quantity:</h3> <input type="number" name="stockQuantity" min="0" value="${product.stockQuantity}" required></label><br>
         <div style="display: flex; justify-content: space-between; margin-top: 20px;">
             <button type="submit" class="btn">Update Product</button>
             <a href="/products" class="btn">Back to Products</a>

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,17 @@ public class ProductController {
     public String products(@RequestParam(name = "product_name", required = false) String productName,
                            @RequestParam(name = "page", defaultValue = "0") int page,
                            @RequestParam(name = "size", defaultValue = "10") int size,
+                           @RequestParam(name = "sort", defaultValue = "productName") String sort,
+                           @RequestParam(name = "order", defaultValue = "asc") String order,
                            Model model) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(order.equals("asc")?Sort.Direction.ASC:Sort.Direction.DESC, sort));
         Page<Product> productPage = productService.listProducts(productName, pageable);
         model.addAttribute("products", productPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
         model.addAttribute("product_name", productName);
+        model.addAttribute("sort", sort);
+        model.addAttribute("order", order);
         return "/products";
     }
 

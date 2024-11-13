@@ -57,7 +57,8 @@
                 <div style="display: flex; gap: 10px;">
                     <td>
                         <a href="/customers/${customer.id}/order/${order.id}" class="btn">View</a>
-                        <form action="/customers/${customer.id}/orders/${order.id}/delete" method="post" style="display:inline;"
+                        <form action="/customers/${customer.id}/orders/${order.id}/delete" method="post"
+                              style="display:inline;"
                               onsubmit="return confirm('Are you sure you want to delete this order?');">
                             <button type="submit" class="btn delete">Delete</button>
                         </form>

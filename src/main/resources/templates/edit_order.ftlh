@@ -28,7 +28,7 @@
 
         <div style="display: flex; justify-content: space-between; margin-top: 20px;">
             <button type="submit" class="btn edit">Save</button>
-            <a href="/customers/${customer.id}/order/${order.id}" class="btn">Back to products for order</a>
+            <a href="/customers/${customer.id}/order/${order.id}" class="btn" >Back to products for order</a>
         </div>
     </form>
 </main>

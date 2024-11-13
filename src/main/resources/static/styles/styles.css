@@ -3,6 +3,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
 }
 
 body {
@@ -10,6 +15,7 @@ body {
     background: linear-gradient(135deg, #1b1b1b, #232323);
     color: #f0f0f0;
     line-height: 1.6;
+    text-decoration: none;
 }
 
 /* Header and Navigation */
@@ -42,6 +48,7 @@ nav a {
 nav a:hover {
     background: linear-gradient(135deg, #ff4081, #ff79b0);
     transform: scale(1.1);
+    text-decoration: none;
 }
 
 /* Main Section */
@@ -101,12 +108,18 @@ form textarea:focus {
     font-size: 1.1rem;
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(142, 45, 226, 0.8);
+    text-decoration: none;
+}
+
+.btn a {
+    text-decoration: none;
 }
 
 .btn:hover {
     background-color: #ff4081;
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 64, 129, 0.8);
+    text-decoration: none;
 }
 
 /* Customer Box Styling */
@@ -253,6 +266,7 @@ footer p {
         height: 40px;
         font-size: 20px;
     }
+
     th.header {
         font-size: 1.5rem;
         padding: 10px;
@@ -260,9 +274,11 @@ footer p {
         color: #fff;
         text-align: left;
     }
+
     .center {
         text-align: center;
     }
+
     .sort-arrow {
         display: inline-block;
         margin-left: 5px;
